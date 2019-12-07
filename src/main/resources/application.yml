@@ -6,6 +6,10 @@ spring:
     username: root
     password: root
 
+  flyway:
+    locations: classpath:db/migration,classpath:db/develop
+
+
   jpa:
     hibernate:
       ddl-auto: validate
@@ -14,5 +18,12 @@ spring:
       hibernate.dialect: org.hibernate.dialect.H2Dialect
     open-in-view: false
 
+  h2:
+    console:
+      enabled: true
+      path: /h2
+
 server:
   port: 8081
+
+

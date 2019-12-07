@@ -3,10 +3,7 @@ package ru.xpendence.rosbank.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import ru.xpendence.rosbank.dto.Test;
 
@@ -30,5 +27,10 @@ public class TestController {
     @GetMapping
     public ResponseEntity<Test> test() {
         return restTemplate.getForEntity("http://algo:8082/test", Test.class);
+    }
+
+    @PostMapping("hello")
+    public String hello(@RequestBody String s) {
+        return s;
     }
 }
