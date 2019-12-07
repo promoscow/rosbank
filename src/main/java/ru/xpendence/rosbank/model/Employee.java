@@ -6,11 +6,11 @@ import lombok.ToString;
 
 import javax.persistence.*;
 
-@Entity
-@Table(name = "employees")
 @Data
-@EqualsAndHashCode
+@Entity
 @ToString
+@EqualsAndHashCode
+@Table(name = "employees")
 public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

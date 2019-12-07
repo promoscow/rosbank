@@ -24,6 +24,7 @@ public class FindBranchService {
     private final RestTemplate restTemplate;
     private final CityRepository cityRepository;
     private final BranchRepository branchRepository;
+    private static final String URL = "http://algo:8082/inn";
 
     public ResponseEnd getBranches(Double latitude, Double longitude, String cityName) {
         City city = cityRepository.getByName(cityName);
@@ -41,26 +42,13 @@ public class FindBranchService {
     }
 
     public ResponseEnd sendRequest(AgentRequest agentRequest) {
-        String url = "http://algo:8082/inn";
-
         ResponseEntity<TaxServiceResponseDto> taxServiceResponse = restTemplate.getForEntity(
-                UriComponentsBuilder.fromHttpUrl(url).queryParam("inn", agentRequest.getInnNumber()).toUriString(),
+                UriComponentsBuilder.fromHttpUrl(URL).queryParam("inn", agentRequest.getInnNumber()).toUriString(),
                 TaxServiceResponseDto.class);
         TaxServiceResponseDto resDto = taxServiceResponse.getBody();
 
         return getBranches(Double.parseDouble(resDto.getLatitude()),
                 Double.parseDouble(resDto.getLongitude()),
                 resDto.getRegion());
-    }
-
-    public String getCity(String comment) {
-        List<City> cities = cityRepository.findAll();
-        String[] array = comment.split(" ");
-        for (int i = 0; i < array.length; i++) {
-            if (cities.contains(array[i])) {
-                return array[i];
-            }
-        }
-        return null;
     }
 }

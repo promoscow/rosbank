@@ -8,11 +8,12 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity
-@Table(name = "branch")
+
 @Data
-@EqualsAndHashCode
+@Entity
 @ToString
+@EqualsAndHashCode
+@Table(name = "branch")
 public class Branch {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

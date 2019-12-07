@@ -7,5 +7,4 @@ public class BranchDto {
     private Double lat;
     private Double lon;
     private String cityName;
-
 }

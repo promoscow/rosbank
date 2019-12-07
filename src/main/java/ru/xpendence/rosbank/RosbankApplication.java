@@ -16,5 +16,4 @@ public class RosbankApplication {
     public RestTemplate restTemplate() {
         return new RestTemplate();
     }
-
 }

@@ -11,11 +11,8 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ResponseEnd {
-
     private Double latitude;
     private Double longitude;
     private String cityName;
     private List<Branch> branches;
-
-
 }
