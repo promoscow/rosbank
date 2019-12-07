@@ -10,8 +10,10 @@ import org.springframework.web.util.UriComponentsBuilder;
 import ru.xpendence.rosbank.dao.BranchRepository;
 import ru.xpendence.rosbank.dao.CityRepository;
 import ru.xpendence.rosbank.dto.AgentRequest;
+import ru.xpendence.rosbank.dto.BranchDto;
 import ru.xpendence.rosbank.dto.ResponseEnd;
 import ru.xpendence.rosbank.dto.TaxServiceResponseDto;
+import ru.xpendence.rosbank.mapper.BranchMapper;
 import ru.xpendence.rosbank.model.Branch;
 import ru.xpendence.rosbank.model.City;
 
@@ -24,10 +26,11 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor(onConstructor_ = {@Autowired})
 public class FindBranchService {
+    private static final String URL = "http://algo:8082/inn";
+    private final BranchMapper branchMapper;
     private final RestTemplate restTemplate;
     private final CityRepository cityRepository;
     private final BranchRepository branchRepository;
-    private static final String URL = "http://algo:8082/inn";
 
     public ResponseEnd getBranches(Double latitude, Double longitude, String cityName) {
         City city = cityRepository.getByName(cityName);
@@ -37,10 +40,11 @@ public class FindBranchService {
             Double path = Math.sqrt(Math.pow(branch.getGeoLat() - latitude, 2) + Math.pow(branch.getGeoLon() - longitude, 2));
             branch.setPath(path);
         }
-        List<Branch> resultBranch = listAllBranches
+        List<BranchDto> resultBranch = listAllBranches
                 .stream()
                 .sorted(Comparator.comparing(Branch::getPath))
                 .limit(1)
+                .map(branchMapper::toDto)
                 .collect(Collectors.toList());
         log.info("Получение резальтат по отделниям {} ", Arrays.toString(new List[]{resultBranch}));
         return new ResponseEnd(latitude, longitude, cityName, resultBranch);
