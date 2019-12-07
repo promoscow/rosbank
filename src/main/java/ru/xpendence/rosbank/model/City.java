@@ -4,10 +4,11 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
+@Entity
+@Table(name = "city")
 @Data
 @EqualsAndHashCode
 @ToString
@@ -17,5 +18,8 @@ public class City {
     private Long id;
     private String name;
     private String street;
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
+    @JoinColumn(name = "city_id")
+    private List<Branch> branches = new ArrayList<>();
 
 }

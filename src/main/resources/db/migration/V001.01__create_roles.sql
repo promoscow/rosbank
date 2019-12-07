@@ -2,8 +2,8 @@ create table city
 (
     id        bigint auto_increment
         primary key,
-    name    int          not null,
-    street   datetime     not null
+    name    varchar(1024)          not null,
+    street   varchar(1024)     not null
 );
 
 
