@@ -8,6 +8,6 @@ import ru.xpendence.rosbank.model.Branch;
 import java.util.List;
 
 public interface BranchRepository extends JpaRepository<Branch, Long> {
-    @Query("select b from Branch b where b.city_id = ?1")
+    @Query("select b from Branch b where b.cityId = ?1")
     List<Branch> findAllByCityId(Long id);
 }

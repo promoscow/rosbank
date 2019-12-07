@@ -18,7 +18,8 @@ public class Branch {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Long city_id;
+    @Column(name = "city_id")
+    private Long cityId;
     private String name;
     private Double geoLat;
     private Double geoLon;

@@ -17,7 +17,9 @@ public class Employee {
     private Long id;
     private String name;
     private boolean online;
-    private int count_lid;
-    private Long branch_id;
+    @Column(name="count_lid")
+    private int countLid;
+    @Column(name="branch_id")
+    private Long branchId;
 
 }
