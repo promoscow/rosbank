@@ -26,13 +26,26 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor(onConstructor_ = {@Autowired})
 public class FindBranchService {
+
     private static final String URL = "http://algo:8082/inn";
     private final BranchMapper branchMapper;
     private final RestTemplate restTemplate;
     private final CityRepository cityRepository;
     private final BranchRepository branchRepository;
 
-    public ResponseEnd getBranches(Double latitude, Double longitude, String cityName) {
+    public ResponseEnd sendRequest(AgentRequest agentRequest) {
+        ResponseEntity<TaxServiceResponseDto> taxServiceResponse = restTemplate.getForEntity(
+                UriComponentsBuilder.fromHttpUrl(URL).queryParam("inn", agentRequest.getInnNumber()).toUriString(),
+                TaxServiceResponseDto.class);
+        TaxServiceResponseDto resDto = taxServiceResponse.getBody();
+        log.info("Получен ответ от микросервиса {} ", resDto.toString());
+
+        return getBranches(Double.parseDouble(resDto.getLatitude()),
+                Double.parseDouble(resDto.getLongitude()),
+                resDto.getRegion());
+    }
+
+    private ResponseEnd getBranches(Double latitude, Double longitude, String cityName) {
         City city = cityRepository.getByName(cityName);
         log.info("Получен город {} ", city.getName());
         List<Branch> listAllBranches = branchRepository.findAllByCityId(city.getId());
@@ -49,17 +62,5 @@ public class FindBranchService {
                 .collect(Collectors.toList());
         log.info("Получение результат по отделниям {} ", Arrays.toString(new List[]{resultBranch}));
         return new ResponseEnd(latitude, longitude, cityName, resultBranch.get(0), resultBranch);
-    }
-
-    public ResponseEnd sendRequest(AgentRequest agentRequest) {
-        ResponseEntity<TaxServiceResponseDto> taxServiceResponse = restTemplate.getForEntity(
-                UriComponentsBuilder.fromHttpUrl(URL).queryParam("inn", agentRequest.getInnNumber()).toUriString(),
-                TaxServiceResponseDto.class);
-        TaxServiceResponseDto resDto = taxServiceResponse.getBody();
-        log.info("Получен ответ от микросервиса {} ", resDto.toString());
-
-        return getBranches(Double.parseDouble(resDto.getLatitude()),
-                Double.parseDouble(resDto.getLongitude()),
-                resDto.getRegion());
     }
 }
