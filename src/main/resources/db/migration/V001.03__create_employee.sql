@@ -4,6 +4,6 @@ create table employees
         primary key,
     branch_id    bigint          not null,
     name   varchar(1024)     not null,
-    is_online   boolean     not null,
+    online   boolean     not null,
     count_lid   int    not null
 );

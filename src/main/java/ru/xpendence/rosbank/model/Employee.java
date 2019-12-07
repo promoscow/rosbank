@@ -16,7 +16,7 @@ public class Employee {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    private boolean is_online;
+    private boolean online;
     private int count_lid;
     private Long branch_id;
 
