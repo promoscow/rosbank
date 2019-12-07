@@ -13,5 +13,6 @@ public class ResponseEnd {
     private Double latitude;
     private Double longitude;
     private String cityName;
+    private BranchDto resultBranchDto;
     private List<BranchDto> branches;
 }

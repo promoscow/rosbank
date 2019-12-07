@@ -43,11 +43,11 @@ public class FindBranchService {
         List<BranchDto> resultBranch = listAllBranches
                 .stream()
                 .sorted(Comparator.comparing(Branch::getPath))
-                .limit(1)
+                .limit(5)
                 .map(branchMapper::toDto)
                 .collect(Collectors.toList());
         log.info("Получение резальтат по отделниям {} ", Arrays.toString(new List[]{resultBranch}));
-        return new ResponseEnd(latitude, longitude, cityName, resultBranch);
+        return new ResponseEnd(latitude, longitude, cityName, resultBranch.get(0), resultBranch);
     }
 
     public ResponseEnd sendRequest(AgentRequest agentRequest) {
