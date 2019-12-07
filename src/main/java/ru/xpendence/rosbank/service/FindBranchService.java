@@ -46,7 +46,7 @@ public class FindBranchService {
                 .limit(5)
                 .map(branchMapper::toDto)
                 .collect(Collectors.toList());
-        log.info("Получение резальтат по отделниям {} ", Arrays.toString(new List[]{resultBranch}));
+        log.info("Получение результат по отделниям {} ", Arrays.toString(new List[]{resultBranch}));
         return new ResponseEnd(latitude, longitude, cityName, resultBranch.get(0), resultBranch);
     }
 
