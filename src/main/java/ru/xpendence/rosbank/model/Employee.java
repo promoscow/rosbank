@@ -4,13 +4,16 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
-import javax.persistence.Table;
+import javax.persistence.*;
 
-@Table(name = "employee")
+@Entity
+@Table(name = "employees")
 @Data
 @EqualsAndHashCode
 @ToString
 public class Employee {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     private boolean is_online;

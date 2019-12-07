@@ -21,6 +21,7 @@ public class Branch {
     private String name;
     private Double geo_lat;
     private Double geo_lon;
+    private String street;
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     @JoinColumn(name = "branch_id")
     private List<Employee> employees = new ArrayList<>();
