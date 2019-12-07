@@ -2,15 +2,17 @@ package ru.xpendence.rosbank.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import ru.xpendence.rosbank.dto.AgentRequest;
 
 @CrossOrigin
 @RestController
-@RequestMapping("/entity")
+@RequestMapping("/agent")
 @RequiredArgsConstructor(onConstructor_ = {@Autowired})
 public class AgentRequestController {
-
-
+    
+    @PostMapping("/request")
+    public AgentRequest getInfoFromAgent(@RequestBody AgentRequest agentRequest) {
+        return agentRequest;
+    }
 }

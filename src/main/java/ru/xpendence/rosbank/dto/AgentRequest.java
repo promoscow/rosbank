@@ -1,8 +1,11 @@
 package ru.xpendence.rosbank.dto;
 
+import lombok.Data;
+
+@Data
 public class AgentRequest {
-    private int agentCode;
-    private int phoneNumber;
-    private int innNumber;
+    private String agentCode;
+    private String phoneNumber;
+    private String innNumber;
     private String comment;
 }
