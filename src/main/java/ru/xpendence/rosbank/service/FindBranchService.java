@@ -29,7 +29,7 @@ public class FindBranchService {
         List<Branch> resultBranch = listAllBranches
                 .stream()
                 .sorted(Comparator.comparing(Branch::getPath))
-                .limit(5)
+                .limit(1)
                 .collect(Collectors.toList());
         return new ResponseEnd(latitude, longitude, cityName, resultBranch);
     }
