@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import ru.xpendence.rosbank.dao.CityRepository;
 import ru.xpendence.rosbank.dto.BranchDto;
-import ru.xpendence.rosbank.model.Branch;
+import ru.xpendence.rosbank.dto.ResponseEnd;
 import ru.xpendence.rosbank.model.City;
 import ru.xpendence.rosbank.service.FindBranchService;
 
@@ -25,7 +25,7 @@ public class EntityController {
     }
 
     @PostMapping("branch")
-    public List<Branch> getAllBranches(@RequestBody BranchDto dto){
+    public ResponseEnd getAllBranches(@RequestBody BranchDto dto) {
         return findBranchService.getBranches(dto.getLat(), dto.getLon(), dto.getCityName());
     }
 }

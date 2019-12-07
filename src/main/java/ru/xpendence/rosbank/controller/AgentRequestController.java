@@ -26,10 +26,10 @@ public class AgentRequestController {
                 UriComponentsBuilder.fromHttpUrl(url).queryParam("inn", agentRequest.getInnNumber()).toUriString(),
                 TaxServiceResponseDto.class);
         String cityNameFromComment = findBranchService.getCity(agentRequest.getComment());
-        if (cityNameFromComment != null && cityNameFromComment.equalsIgnoreCase(taxServiceResponse.getBody().getRegion())){
+        if (cityNameFromComment != null && cityNameFromComment.equalsIgnoreCase(taxServiceResponse.getBody().getRegion())) {
             //вернуть результат
         } else {
-           //отправить телефон Славе
+            //отправить телефон Славе
         }
         return taxServiceResponse;
     }

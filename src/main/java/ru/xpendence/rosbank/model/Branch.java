@@ -13,7 +13,7 @@ import java.util.List;
 @Data
 @EqualsAndHashCode
 @ToString
-public class Branch{
+public class Branch {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.xpendence.rosbank.dao.BranchRepository;
 import ru.xpendence.rosbank.dao.CityRepository;
+import ru.xpendence.rosbank.dto.ResponseEnd;
 import ru.xpendence.rosbank.model.Branch;
 import ru.xpendence.rosbank.model.City;
 
@@ -18,14 +19,19 @@ public class FindBranchService {
     private final CityRepository cityRepository;
     private final BranchRepository branchRepository;
 
-    public List<Branch> getBranches(Double latitude, Double longitude, String cityName) {
+    public ResponseEnd getBranches(Double latitude, Double longitude, String cityName) {
         City city = cityRepository.getByName(cityName);
         List<Branch> listAllBranches = branchRepository.findAllByCityId(city.getId());
         for (Branch branch : listAllBranches) {
             Double path = Math.sqrt(Math.pow(branch.getGeoLat() - latitude, 2) + Math.pow(branch.getGeoLon() - longitude, 2));
             branch.setPath(path);
         }
-        return listAllBranches.stream().sorted(Comparator.comparing(Branch::getPath)).limit(5).collect(Collectors.toList());
+        List<Branch> resultBranch = listAllBranches
+                .stream()
+                .sorted(Comparator.comparing(Branch::getPath))
+                .limit(5)
+                .collect(Collectors.toList());
+        return new ResponseEnd(latitude, longitude, cityName, resultBranch);
     }
 
     public String getCity(String comment) {
