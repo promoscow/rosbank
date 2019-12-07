@@ -28,8 +28,10 @@ public class AgentRequestController {
         String cityNameFromComment = findBranchService.getCity(agentRequest.getComment());
         if (cityNameFromComment != null && cityNameFromComment.equalsIgnoreCase(taxServiceResponse.getBody().getRegion())) {
             //вернуть результат
+        } else if (cityNameFromComment == null) {
+            //вернуть результат
         } else {
-            //отправить телефон Славе
+            //отправить телефон Славе и вернуть результат
         }
         return taxServiceResponse;
     }
