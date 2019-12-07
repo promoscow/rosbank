@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 import ru.xpendence.rosbank.dto.AgentRequest;
+import ru.xpendence.rosbank.dto.ResponseEnd;
 import ru.xpendence.rosbank.dto.TaxServiceResponseDto;
 import ru.xpendence.rosbank.service.FindBranchService;
 
@@ -19,20 +20,16 @@ public class AgentRequestController {
     private final FindBranchService findBranchService;
 
     @PostMapping("/request")
-    public ResponseEntity<TaxServiceResponseDto> getInfoFromAgent(@RequestBody AgentRequest agentRequest) {
+    public ResponseEnd getInfoFromAgent(@RequestBody AgentRequest agentRequest) {
         String url = "http://algo:8082/inn";
 
         ResponseEntity<TaxServiceResponseDto> taxServiceResponse = restTemplate.getForEntity(
                 UriComponentsBuilder.fromHttpUrl(url).queryParam("inn", agentRequest.getInnNumber()).toUriString(),
                 TaxServiceResponseDto.class);
-        String cityNameFromComment = findBranchService.getCity(agentRequest.getComment());
-        if (cityNameFromComment != null && cityNameFromComment.equalsIgnoreCase(taxServiceResponse.getBody().getRegion())) {
-            //вернуть результат
-        } else if (cityNameFromComment == null) {
-            //вернуть результат
-        } else {
-            //отправить телефон Славе и вернуть результат
-        }
-        return taxServiceResponse;
+        TaxServiceResponseDto resDto = taxServiceResponse.getBody();
+
+        return findBranchService.getBranches(Double.parseDouble(resDto.getLatitude()),
+                Double.parseDouble(resDto.getLongitude()),
+                resDto.getRegion());
     }
 }
