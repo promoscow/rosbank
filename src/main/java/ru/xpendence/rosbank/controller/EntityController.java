@@ -2,12 +2,12 @@ package ru.xpendence.rosbank.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ru.xpendence.rosbank.dao.CityRepository;
+import ru.xpendence.rosbank.dto.BranchDto;
+import ru.xpendence.rosbank.model.Branch;
 import ru.xpendence.rosbank.model.City;
+import ru.xpendence.rosbank.service.FindBranchService;
 
 import java.util.List;
 
@@ -16,11 +16,16 @@ import java.util.List;
 @RequestMapping("/entity")
 @RequiredArgsConstructor(onConstructor_ = {@Autowired})
 public class EntityController {
-
+    private final FindBranchService findBranchService;
     private final CityRepository cityRepository;
 
     @GetMapping("cities")
     public List<City> allCity() {
         return cityRepository.findAll();
+    }
+
+    @PostMapping("branch")
+    public List<Branch> getAllBranches(@RequestBody BranchDto dto){
+        return findBranchService.getBranches(dto.getLat(), dto.getLon(), dto.getCityName());
     }
 }

@@ -13,16 +13,19 @@ import java.util.List;
 @Data
 @EqualsAndHashCode
 @ToString
-public class Branch {
+public class Branch{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Long city_id;
     private String name;
-    private Double geo_lat;
-    private Double geo_lon;
+    private Double geoLat;
+    private Double geoLon;
     private String street;
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     @JoinColumn(name = "branch_id")
     private List<Employee> employees = new ArrayList<>();
+    @Transient
+    private Double path;
+
 }
