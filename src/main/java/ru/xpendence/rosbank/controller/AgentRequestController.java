@@ -1,12 +1,14 @@
 package ru.xpendence.rosbank.controller;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import ru.xpendence.rosbank.dto.AgentRequest;
 import ru.xpendence.rosbank.dto.ResponseEnd;
 import ru.xpendence.rosbank.service.FindBranchService;
 
+@Slf4j
 @CrossOrigin
 @RestController
 @RequestMapping("/agent")
@@ -16,6 +18,7 @@ public class AgentRequestController {
 
     @PostMapping("/request")
     public ResponseEnd getInfoFromAgent(@RequestBody AgentRequest agentRequest) {
+        log.info("Получен запрос от фронта {}", agentRequest.toString());
         return findBranchService.sendRequest(agentRequest);
     }
 }

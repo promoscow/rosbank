@@ -1,6 +1,7 @@
 package ru.xpendence.rosbank.service;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -14,10 +15,12 @@ import ru.xpendence.rosbank.dto.TaxServiceResponseDto;
 import ru.xpendence.rosbank.model.Branch;
 import ru.xpendence.rosbank.model.City;
 
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor(onConstructor_ = {@Autowired})
 public class FindBranchService {
@@ -28,6 +31,7 @@ public class FindBranchService {
 
     public ResponseEnd getBranches(Double latitude, Double longitude, String cityName) {
         City city = cityRepository.getByName(cityName);
+        log.info("Получен город {} ", city.getName());
         List<Branch> listAllBranches = branchRepository.findAllByCityId(city.getId());
         for (Branch branch : listAllBranches) {
             Double path = Math.sqrt(Math.pow(branch.getGeoLat() - latitude, 2) + Math.pow(branch.getGeoLon() - longitude, 2));
@@ -38,6 +42,7 @@ public class FindBranchService {
                 .sorted(Comparator.comparing(Branch::getPath))
                 .limit(1)
                 .collect(Collectors.toList());
+        log.info("Получение резальтат по отделниям {} ", Arrays.toString(new List[]{resultBranch}));
         return new ResponseEnd(latitude, longitude, cityName, resultBranch);
     }
 
@@ -46,6 +51,7 @@ public class FindBranchService {
                 UriComponentsBuilder.fromHttpUrl(URL).queryParam("inn", agentRequest.getInnNumber()).toUriString(),
                 TaxServiceResponseDto.class);
         TaxServiceResponseDto resDto = taxServiceResponse.getBody();
+        log.info("Получен ответ от микросервиса {} ", resDto.toString());
 
         return getBranches(Double.parseDouble(resDto.getLatitude()),
                 Double.parseDouble(resDto.getLongitude()),
