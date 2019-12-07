@@ -6,9 +6,6 @@ spring:
     username: root
     password: root
 
-  flyway:
-    locations: classpath:db/migration,classpath:db/develop
-
   jpa:
     hibernate:
       ddl-auto: validate
