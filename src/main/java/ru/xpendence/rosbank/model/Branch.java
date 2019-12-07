@@ -29,5 +29,7 @@ public class Branch {
     private List<Employee> employees = new ArrayList<>();
     @Transient
     private Double path;
+    @Transient
+    private int countEmployee;
 
 }

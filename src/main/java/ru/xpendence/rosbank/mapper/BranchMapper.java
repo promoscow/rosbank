@@ -9,6 +9,6 @@ public class BranchMapper {
 
     public BranchDto toDto(Branch branch) {
         return new BranchDto(branch.getId(), branch.getName(), branch.getGeoLat(), branch.getGeoLon(),
-                branch.getStreet(), branch.getEmployees(), branch.getPath());
+                branch.getStreet(), branch.getEmployees(), branch.getPath(), branch.getCountEmployee());
     }
 }

@@ -38,7 +38,8 @@ public class FindBranchService {
         List<Branch> listAllBranches = branchRepository.findAllByCityId(city.getId());
         for (Branch branch : listAllBranches) {
             Double path = Math.sqrt(Math.pow(branch.getGeoLat() - latitude, 2) + Math.pow(branch.getGeoLon() - longitude, 2));
-            branch.setPath(path);
+            branch.setPath(path * 111.1);
+            branch.setCountEmployee(branch.getEmployees().size());
         }
         List<BranchDto> resultBranch = listAllBranches
                 .stream()

@@ -16,4 +16,5 @@ public class BranchDto {
     private String street;
     private List<Employee> employees;
     private Double path;
+    private int countEmployee;
 }
