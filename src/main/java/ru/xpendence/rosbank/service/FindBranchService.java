@@ -3,6 +3,7 @@ package ru.xpendence.rosbank.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -26,8 +27,9 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor(onConstructor_ = {@Autowired})
 public class FindBranchService {
+    @Value("${url.microservice.algo}")
+    private String url;
 
-    private static final String URL = "http://algo:8082/inn";
     private final BranchMapper branchMapper;
     private final RestTemplate restTemplate;
     private final CityRepository cityRepository;
@@ -35,7 +37,7 @@ public class FindBranchService {
 
     public ResponseEnd sendRequest(AgentRequest agentRequest) {
         ResponseEntity<TaxServiceResponseDto> taxServiceResponse = restTemplate.getForEntity(
-                UriComponentsBuilder.fromHttpUrl(URL).queryParam("inn", agentRequest.getInnNumber()).toUriString(),
+                UriComponentsBuilder.fromHttpUrl(url).queryParam("inn", agentRequest.getInnNumber()).toUriString(),
                 TaxServiceResponseDto.class);
         TaxServiceResponseDto resDto = taxServiceResponse.getBody();
         log.info("Получен ответ от микросервиса {} ", resDto.toString());
