@@ -6,3 +6,8 @@ Java, Spring, Hibernate.
 
 ## Архитектура приложения
 ![](rosbank.jpg)
+
+###Работа с профилями:
+ ####Для запуска dev профиля в настройках запуска проекта в Program arguments указать значение: --spring.profiles.active="dev"
+  
+ ####По умолчанию указан профиль prod
